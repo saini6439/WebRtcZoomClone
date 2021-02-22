@@ -9,7 +9,7 @@ myVideo.muted = true;
 var peer = new Peer(undefined, {
   path: "/peerjs",
   host: "/",
-  port: "443",
+  port: "3030",
 });
 
 let myVideoStream;
@@ -41,20 +41,7 @@ navigator.mediaDevices
       connectToNewUser(userId, stream);
     });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.which === 13 && chatInputBox.value != "") {
-        socket.emit("message", chatInputBox.value);
-        chatInputBox.value = "";
-      }
-    });
 
-    socket.on("createMessage", (msg) => {
-      console.log(msg);
-      let li = document.createElement("li");
-      li.innerHTML = msg;
-      all_messages.append(li);
-      main__chat__window.scrollTop = main__chat__window.scrollHeight;
-    });
   });
 
 peer.on("call", function (call) {
@@ -126,6 +113,21 @@ const muteUnmute = () => {
     myVideoStream.getAudioTracks()[0].enabled = true;
   }
 };
+
+document.addEventListener("keydown", (e) => {
+  if (e.which === 13 && chatInputBox.value != "") {
+    socket.emit("message", chatInputBox.value);
+    chatInputBox.value = "";
+  }
+});
+
+socket.on("createMessage", (msg) => {
+  console.log(msg);
+  let li = document.createElement("li");
+  li.innerHTML = msg;
+  all_messages.append(li);
+  main__chat__window.scrollTop = main__chat__window.scrollHeight;
+});
 
 const setPlayVideo = () => {
   const html = `<i class="unmute fa fa-pause-circle"></i>
