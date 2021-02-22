@@ -9,6 +9,7 @@ myVideo.muted = true;
 var peer = new Peer(undefined, {
   path: "/peerjs",
   host: "/",
+  secure: true,
   port: "443",
 });
 
